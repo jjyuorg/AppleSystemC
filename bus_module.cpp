@@ -10,6 +10,11 @@ SC_MODULE(Bus) {
 };
 
 int sc_main(int argc, char* argv[]) {
-    cout << "Testing Bus Module" << endl;
+    cout << "===============================\n";
+    cout << " Starting Bus Module Test \n";
+    cout << "===============================\n";
+    Bus bus("BusTest");
+    cout << "[Test] Bus module instantiated successfully." << endl;
+    cout << "[Test] Bus module test complete." << endl;
     return 0;
 }

@@ -7,6 +7,11 @@ SC_MODULE(Memory) {
 };
 
 int sc_main(int argc, char* argv[]) {
-    cout << "Testing Memory Module" << endl;
+    cout << "===============================\n";
+    cout << " Starting Memory Module Test \n";
+    cout << "===============================\n";
+    Memory mem("MemoryTest");
+    cout << "[Test] Memory module instantiated successfully." << endl;
+    cout << "[Test] Memory module test complete." << endl;
     return 0;
 }

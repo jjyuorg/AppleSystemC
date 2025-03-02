@@ -8,6 +8,11 @@ SC_MODULE(MainMemory_Module) {
 };
 
 int sc_main(int argc, char* argv[]) {
-    cout << "Testing Main Memory Module" << endl;
+    cout << "===============================\n";
+    cout << " Starting Main Memory Module Test \n";
+    cout << "===============================\n";
+    MainMemory_Module mem("MainMemoryTest");
+    cout << "[Test] Main Memory module instantiated successfully." << endl;
+    cout << "[Test] Main Memory module test complete." << endl;
     return 0;
 }

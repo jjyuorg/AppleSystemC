@@ -8,6 +8,11 @@ SC_MODULE(CPU_Module) {
 };
 
 int sc_main(int argc, char* argv[]) {
-    cout << "Testing CPU Module" << endl;
+    cout << "===============================\n";
+    cout << " Starting CPU Module Test \n";
+    cout << "===============================\n";
+    CPU_Module cpu("CPUTest");
+    cout << "[Test] CPU module instantiated successfully." << endl;
+    cout << "[Test] CPU module test complete." << endl;
     return 0;
 }
