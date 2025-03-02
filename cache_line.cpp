@@ -1,4 +1,5 @@
 // File 2: cache_line.cpp
+#include <cstdint>
 struct CacheLine {
     uint64_t tag;
     bool valid;
