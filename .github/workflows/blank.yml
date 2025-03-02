@@ -48,12 +48,40 @@ jobs:
         run: |
           realpath systemc-2.3.4-source/INSTALL
 
-      - name: Run SystemC test
+      - name: Run SystemC advanced tests
         run: |
           echo '#include <systemc.h>' > test.cpp
+          echo 'SC_MODULE(Producer) {' >> test.cpp
+          echo '  sc_out<int> out;' >> test.cpp
+          echo '  void generate() {' >> test.cpp
+          echo '    for (int i = 0; i < 5; ++i) {' >> test.cpp
+          echo '      out.write(i);' >> test.cpp
+          echo '      wait(10, SC_NS);' >> test.cpp
+          echo '    }' >> test.cpp
+          echo '  }' >> test.cpp
+          echo '  SC_CTOR(Producer) { SC_THREAD(generate); }' >> test.cpp
+          echo '};' >> test.cpp
+
+          echo 'SC_MODULE(Consumer) {' >> test.cpp
+          echo '  sc_in<int> in;' >> test.cpp
+          echo '  void consume() {' >> test.cpp
+          echo '    while (true) {' >> test.cpp
+          echo '      cout << "Received: " << in.read() << " at " << sc_time_stamp() << endl;' >> test.cpp
+          echo '      wait();' >> test.cpp
+          echo '    }' >> test.cpp
+          echo '  }' >> test.cpp
+          echo '  SC_CTOR(Consumer) { SC_METHOD(consume); sensitive << in; dont_initialize(); }' >> test.cpp
+          echo '};' >> test.cpp
+
           echo 'int sc_main(int argc, char* argv[]) {' >> test.cpp
-          echo '  std::cout << "SystemC is working!" << std::endl;' >> test.cpp
+          echo '  sc_signal<int> sig;' >> test.cpp
+          echo '  Producer prod("Producer");' >> test.cpp
+          echo '  Consumer cons("Consumer");' >> test.cpp
+          echo '  prod.out(sig);' >> test.cpp
+          echo '  cons.in(sig);' >> test.cpp
+          echo '  sc_start(50, SC_NS);' >> test.cpp
           echo '  return 0;' >> test.cpp
           echo '}' >> test.cpp
+
           g++ -std=c++17 -I systemc-2.3.4-source/INSTALL/include -L systemc-2.3.4-source/INSTALL/lib -lsystemc test.cpp -o test
           ./test
