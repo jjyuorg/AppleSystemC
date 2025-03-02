@@ -1,0 +1,53 @@
+name: Install SystemC on macOS
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          brew install cmake
+          echo "CXX=clang++" >> $GITHUB_ENV
+
+      - name: Verify architecture
+        run: |
+          if [[ "$(uname -m)" != "arm64" ]]; then
+            echo "Error: Not running on Apple Silicon (ARM64)." >&2
+            exit 1
+          fi
+          echo "Running on Apple Silicon (ARM64)."
+
+      - name: Download and extract SystemC
+        run: |
+          curl -LO https://www.accellera.org/images/downloads/standards/systemc/systemc-2.3.4.tar.gz
+          tar -xzf systemc-2.3.4.tar.gz
+
+      - name: Modify CMakeLists.txt
+        run: |
+          sed -i '' 's/set (CMAKE_CXX_STANDARD 98 CACHE STRING.*/set (CMAKE_CXX_STANDARD 17)/' systemc-2.3.4/CMakeLists.txt
+          sed -i '' 's/set (CMAKE_CXX_STANDARD_REQUIRED ON CACHE BOOL.*/set (CMAKE_CXX_STANDARD_REQUIRED ON)/' systemc-2.3.4/CMakeLists.txt
+
+      - name: Build and install SystemC
+        run: |
+          mkdir -p systemc-2.3.4/BUILD systemc-2.3.4/INSTALL
+          cd systemc-2.3.4/BUILD
+          cmake -DCMAKE_INSTALL_PREFIX="../INSTALL" ..
+          make -j$(sysctl -n hw.ncpu)
+          make install
+          cd ../..
+
+      - name: Verify installation
+        run: |
+          realpath systemc-2.3.4/INSTALL
