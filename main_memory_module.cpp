@@ -6,3 +6,8 @@ SC_MODULE(MainMemory_Module) {
         cout << "[MainMemory] Module constructed." << endl;
     }
 };
+
+int sc_main(int argc, char* argv[]) {
+    cout << "Testing Main Memory Module" << endl;
+    return 0;
+}

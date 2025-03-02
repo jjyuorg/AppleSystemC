@@ -8,3 +8,8 @@ SC_MODULE(Bus) {
         cout << "[Bus] Module constructed." << endl;
     }
 };
+
+int sc_main(int argc, char* argv[]) {
+    cout << "Testing Bus Module" << endl;
+    return 0;
+}

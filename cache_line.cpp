@@ -5,3 +5,9 @@ struct CacheLine {
     bool dirty;
     uint64_t last_access_time;
 };
+
+#include <systemc.h>
+int sc_main(int argc, char* argv[]) {
+    cout << "Testing Cache Line Structure" << endl;
+    return 0;
+}

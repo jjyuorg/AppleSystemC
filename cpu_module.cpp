@@ -6,3 +6,8 @@ SC_MODULE(CPU_Module) {
         cout << "[CPU] Module constructed." << endl;
     }
 };
+
+int sc_main(int argc, char* argv[]) {
+    cout << "Testing CPU Module" << endl;
+    return 0;
+}
