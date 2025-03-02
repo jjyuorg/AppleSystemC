@@ -10,11 +10,12 @@ SC_MODULE(BusArbitration) {
     sc_in<bool> clk;
     sc_signal<int> bus_owner;
     sc_signal<bool> bus_available;
-    sc_vector<sc_signal<bool>> cpu_requests;
+    std::vector<sc_signal<bool>> cpu_requests;
 
-    SC_CTOR(BusArbitration) : cpu_requests("cpu_requests", NUM_CPUS) {
+    SC_CTOR(BusArbitration) {
         bus_owner.write(-1);
         bus_available.write(true);
+        cpu_requests.resize(NUM_CPUS);
         SC_METHOD(handle_bus_requests);
         sensitive << clk.pos();
         dont_initialize();
@@ -52,12 +53,12 @@ int sc_main(int argc, char* argv[]) {
     std::cout << "========================================\n";
 
     sc_signal<bool> clk_signal;
-    sc_vector<sc_signal<bool>> cpu_requests("cpu_requests", NUM_CPUS);
+    std::vector<sc_signal<bool>> cpu_requests(NUM_CPUS);
 
     BusArbitration bus_arbitration("BusArbitrationTest");
     bus_arbitration.clk(clk_signal);
     for (int i = 0; i < NUM_CPUS; i++) {
-        bus_arbitration.cpu_requests[i](cpu_requests[i]);
+        bus_arbitration.cpu_requests[i].write(false);
     }
 
     sc_start(0, SC_NS);
@@ -66,6 +67,7 @@ int sc_main(int argc, char* argv[]) {
     for (int i = 0; i < NUM_CPUS; i++) {
         std::cout << "[Test] CPU " << i << " requesting the bus." << std::endl;
         cpu_requests[i].write(true);
+        bus_arbitration.cpu_requests[i] = cpu_requests[i];
         sc_start(1, SC_NS);
         cpu_requests[i].write(false);
         bus_arbitration.release_bus(i);
