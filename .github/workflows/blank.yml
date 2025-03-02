@@ -31,8 +31,8 @@ jobs:
 
       - name: Download and extract SystemC
         run: |
-          curl https://github.com/accellera-official/systemc/archive/refs/tags/2.3.4.tar.gz
-          tar -xzf systemc-2.3.4.tar.gz
+          curl -LO https://github.com/accellera-official/systemc/archive/refs/tags/2.3.4.tar.gz
+          tar -xzf 2.3.4.tar.gz
 
       - name: Modify CMakeLists.txt
         run: |
