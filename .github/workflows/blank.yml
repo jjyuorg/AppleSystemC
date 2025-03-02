@@ -67,7 +67,7 @@ jobs:
           echo '  void consume() {' >> test.cpp
           echo '    while (true) {' >> test.cpp
           echo '      cout << "Received: " << in.read() << " at " << sc_time_stamp() << endl;' >> test.cpp
-          echo '      wait();' >> test.cpp
+          echo '      next_trigger(in.value_changed_event());' >> test.cpp
           echo '    }' >> test.cpp
           echo '  }' >> test.cpp
           echo '  SC_CTOR(Consumer) { SC_METHOD(consume); sensitive << in; dont_initialize(); }' >> test.cpp
