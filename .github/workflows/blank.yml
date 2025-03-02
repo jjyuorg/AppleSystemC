@@ -37,8 +37,8 @@ jobs:
 
       - name: Modify CMakeLists.txt
         run: |
-          sed -i '' 's/set (CMAKE_CXX_STANDARD 98 CACHE STRING.*/set (CMAKE_CXX_STANDARD 17)/' systemc-2.3.4-source/CMakeLists.txt
-          sed -i '' 's/set (CMAKE_CXX_STANDARD_REQUIRED ON CACHE BOOL.*/set (CMAKE_CXX_STANDARD_REQUIRED ON)/' systemc-2.3.4-source/CMakeLists.txt
+          sed -i '' 's/set (CMAKE_CXX_STANDARD 98 CACHE STRING.*/set (CMAKE_CXX_STANDARD 17 CACHE STRING "C++ standard to build all targets. Supported values are 98, 11, 14, and 17.")/' systemc-2.3.4-source/CMakeLists.txt
+          sed -i '' 's/set (CMAKE_CXX_STANDARD_REQUIRED ON CACHE BOOL.*/set (CMAKE_CXX_STANDARD_REQUIRED ON CACHE BOOL "The with CMAKE_CXX_STANDARD selected C++ standard is a requirement.")/' systemc-2.3.4-source/CMakeLists.txt
 
       - name: Build and install SystemC
         run: |
