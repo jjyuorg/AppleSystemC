@@ -41,8 +41,8 @@ jobs:
 
       - name: Build and install SystemC
         run: |
-          mkdir -p systemc-2.3.4/BUILD systemc-2.3.4/INSTALL
-          cd systemc-2.3.4/BUILD
+          mkdir -p 2.3.4/BUILD 2.3.4/INSTALL
+          cd 2.3.4/BUILD
           cmake -DCMAKE_INSTALL_PREFIX="../INSTALL" ..
           make -j$(sysctl -n hw.ncpu)
           make install
@@ -50,4 +50,4 @@ jobs:
 
       - name: Verify installation
         run: |
-          realpath systemc-2.3.4/INSTALL
+          realpath 2.3.4/INSTALL
