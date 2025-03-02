@@ -12,8 +12,8 @@ SC_MODULE(MemoryLatencyModel) {
     sc_out<uint64_t> read_data;
     sc_out<bool> operation_done;
 
-    const int READ_LATENCY = 5;
-    const int WRITE_LATENCY = 3;
+    static const int READ_LATENCY = 5;
+    static const int WRITE_LATENCY = 3;
     uint64_t memory[1024]; // 1KB memory storage
     int latency_counter;
     bool in_operation;
@@ -84,14 +84,14 @@ int sc_main(int argc, char* argv[]) {
     read_signal.write(false);
     address_signal.write(500);
     write_data_signal.write(88);
-    sc_start(WRITE_LATENCY, SC_NS);
+    sc_start(MemoryLatencyModel::WRITE_LATENCY, SC_NS);
     write_signal.write(false);
 
     std::cout << "[Test] Reading from address 500." << std::endl;
     write_signal.write(false);
     read_signal.write(true);
     address_signal.write(500);
-    sc_start(READ_LATENCY, SC_NS);
+    sc_start(MemoryLatencyModel::READ_LATENCY, SC_NS);
     read_signal.write(false);
 
     std::cout << "[Test] Verifying read value: " << read_data_signal.read() << std::endl;
