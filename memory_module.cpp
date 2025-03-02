@@ -5,3 +5,8 @@ SC_MODULE(Memory) {
         cout << "[Memory] Module constructed." << endl;
     }
 };
+
+int sc_main(int argc, char* argv[]) {
+    cout << "Testing Memory Module" << endl;
+    return 0;
+}
