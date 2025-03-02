@@ -32,7 +32,7 @@ SC_MODULE(CacheLine) {
 
 SC_MODULE(CoherenceController) {
     sc_in<bool> clk;
-    sc_signal<bool> write_signal;
+    sc_in<bool> write_signal;
     CacheLine cache_line;
 
     SC_CTOR(CoherenceController) : cache_line("CacheLine") {
