@@ -9,9 +9,9 @@ SC_MODULE(BusArbitration) {
     sc_in<bool> clk;
     sc_signal<int> bus_owner;
     sc_signal<bool> bus_available;
-    sc_signal<bool> cpu_requests[NUM_CPUS];
+    sc_vector<sc_in<bool>> cpu_requests;
 
-    SC_CTOR(BusArbitration) {
+    SC_CTOR(BusArbitration) : cpu_requests("cpu_requests", NUM_CPUS) {
         bus_owner.write(-1);
         bus_available.write(true);
         SC_METHOD(handle_bus_requests);
@@ -51,7 +51,7 @@ int sc_main(int argc, char* argv[]) {
     std::cout << "========================================\n";
 
     sc_signal<bool> clk_signal;
-    sc_signal<bool> cpu_requests[NUM_CPUS];
+    sc_vector<sc_signal<bool>> cpu_requests("cpu_requests", NUM_CPUS);
 
     BusArbitration bus_arbitration("BusArbitrationTest");
     bus_arbitration.clk(clk_signal);
