@@ -35,16 +35,11 @@ jobs:
           tar -xzf 2.3.4.tar.gz
           mv systemc-2.3.4 systemc-2.3.4-source
 
-      - name: Modify CMakeLists.txt
-        run: |
-          sed -i '' 's/set (CMAKE_CXX_STANDARD 98 CACHE STRING.*/set (CMAKE_CXX_STANDARD 17 CACHE STRING "C++ standard to build all targets. Supported values are 98, 11, 14, and 17.")/' systemc-2.3.4-source/CMakeLists.txt
-          sed -i '' 's/set (CMAKE_CXX_STANDARD_REQUIRED ON CACHE BOOL.*/set (CMAKE_CXX_STANDARD_REQUIRED ON CACHE BOOL "The with CMAKE_CXX_STANDARD selected C++ standard is a requirement.")/' systemc-2.3.4-source/CMakeLists.txt
-
       - name: Build and install SystemC
         run: |
           mkdir -p systemc-2.3.4-source/BUILD systemc-2.3.4-source/INSTALL
           cd systemc-2.3.4-source/BUILD
-          cmake -DCMAKE_INSTALL_PREFIX="../INSTALL" ..
+          cmake -DCMAKE_CXX_STANDARD=17 -DCMAKE_CXX_STANDARD_REQUIRED=ON -DCMAKE_INSTALL_PREFIX="../INSTALL" ..
           make -j$(sysctl -n hw.ncpu)
           make install
           cd ../..
