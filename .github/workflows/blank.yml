@@ -1,4 +1,4 @@
-name: Test SystemC Modules
+name: Test SystemC Modules 
 
 on:
   push:
